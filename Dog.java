@@ -26,4 +26,29 @@ public class Dog extends Animal {
         super.Eat();
         chew();
     }
+
+    public void Walk()
+    {
+        System.out.println(this.getName() +  " is calling the Walk method");
+        Move(5);
+    }
+
+    public void Run()
+    {
+        System.out.println(this.getName() + " is calling the Run method");
+        Move(6);
+    }
+
+    private void moveLegs(int speed)
+    {
+        System.out.println("Dog is moving legs at " + speed);
+    }
+
+    @Override
+    public void Move(int speed) {
+        System.out.println("Dog version of move called");
+        moveLegs(5);
+        super.Move(speed);
+
+    }
 }

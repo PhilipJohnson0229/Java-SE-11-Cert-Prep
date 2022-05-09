@@ -23,10 +23,12 @@ public class Animal
 
     }
 
-    public void Move()
+    public void Move(int speed)
     {
-
+        System.out.println(this.name + " is calling the moving at " + speed);
     }
+
+
 
     public String getName() {
         return name;
