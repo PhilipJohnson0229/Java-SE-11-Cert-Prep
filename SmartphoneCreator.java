@@ -1,16 +1,19 @@
 package com.philipJohnson;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.ArrayList;
 
-public class GroceryListCreator {
+public class SmartphoneCreator {
     private static Scanner scanner = new Scanner(System.in);
-    private static GroceryList groceryList = new GroceryList();
+
+    private static Smartphone smartphone = new Smartphone();
 
     public static void main(String[] args)
     {
+
         boolean quit = false;
         int choice = 0;
+
         printInstructions();
 
         while(!quit)
@@ -26,7 +29,7 @@ public class GroceryListCreator {
                     printInstructions();
                     break;
                 case 1:
-                    groceryList.printGroceryList();
+                    smartphone.printContactList();
                     break;
                 case 2:
                     addItem();
@@ -60,26 +63,31 @@ public class GroceryListCreator {
         System.out.println("\t 3 - to modify an item in the list.");
         System.out.println("\t 4 - to remove an item from the list.");
         System.out.println("\t 5 - to search for an item on the list.");
-        System.out.println("\t 6 - to refresh contacts list.");
-        System.out.println("\t 7 - to quit.");
+        System.out.println("\t 6 - to quit the application.");
     }
 
     public static void addItem()
     {
-        System.out.println("Please enter an item: ");
-        groceryList.addGroceryItem(scanner.nextLine());
+        System.out.println("Please enter a number: ");
+        String number = scanner.nextLine();
+
+        System.out.println("Please enter a name: ");
+        String name = scanner.nextLine();
+
+        smartphone.addContact(name, number);
+        scanner.nextLine();
     }
 
     public static void modifyItem()
     {
-        System.out.println("Enter the item number: ");
+        System.out.println("Enter the phone number: ");
         String itemNumber = scanner.nextLine();
 
 
-        System.out.println("Please enter the new item: ");
+        System.out.println("Please enter the new name: ");
         String newItem = scanner.nextLine();
 
-        groceryList.modifyGroceryListItem(itemNumber, newItem);
+        smartphone.modifyContact(itemNumber, newItem);
         scanner.nextLine();
     }
 
@@ -88,7 +96,7 @@ public class GroceryListCreator {
         System.out.println("Enter the item name: ");
         String itemNumber = scanner.nextLine();
 
-        groceryList.removeGroceryItem(itemNumber);
+        smartphone.removeContact(itemNumber);
         scanner.nextLine();
     }
 
@@ -98,24 +106,24 @@ public class GroceryListCreator {
         System.out.println("Please enter the search item: ");
         String searchItem = scanner.nextLine();
 
-       if(groceryList.onFile(searchItem))
-       {
+        if(smartphone.onFile(searchItem))
+        {
             System.out.println("Found " + searchItem + " in the grocery list.");
-       }
-       else
-       {
+        }
+        else
+        {
             System.out.println(searchItem + " is not in the grocery list.0");
-       }
+        }
     }
 
     public static void processArrayList()
     {
         ArrayList<String> newArray = new ArrayList<String>();
-        newArray.addAll(groceryList.getGroceryList());
+        newArray.addAll(smartphone.getContacts());
 
-        ArrayList<String> nextArrayList = new ArrayList<String>(groceryList.getGroceryList());
+        ArrayList<String> nextArrayList = new ArrayList<String>(smartphone.getContacts());
 
-        String[] myArray = new String[groceryList.getGroceryList().size()];
-        myArray = groceryList.getGroceryList().toArray(myArray);
+        String[] myArray = new String[smartphone.getContacts().size()];
+        myArray = smartphone.getContacts().toArray(myArray);
     }
 }

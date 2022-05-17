@@ -9,6 +9,7 @@ public class GroceryList {
     {
         return groceryList;
     }
+
     public void addGroceryItem(String item)
     {
         //these type of methods are unique to ArrayLists
@@ -52,7 +53,7 @@ public class GroceryList {
 
     public void removeGroceryItem(int position)
     {
-        String theItem = groceryList.get(position);
+        //String theItem = groceryList.get(position);
         //if we remove an item from the list then the ascending item will descend into the vacant spot
         //i.e. the item at position 2 will now be at position 1 which is the second index
         groceryList.remove(position);
