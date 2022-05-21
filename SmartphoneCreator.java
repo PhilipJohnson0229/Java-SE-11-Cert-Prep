@@ -59,13 +59,13 @@ public class SmartphoneCreator {
     public static void printInstructions()
     {
         System.out.println("\n Press");
-        System.out.println("\t 0 - to see options.");
-        System.out.println("\t 1 - to print the list of grocery items.");
-        System.out.println("\t 2 - to add an item to the list.");
-        System.out.println("\t 3 - to modify an item in the list.");
-        System.out.println("\t 4 - to remove an item from the list.");
-        System.out.println("\t 5 - to search for an item on the list.");
-        System.out.println("\t 6 - to quit the application.");
+        System.out.println("\t 0 - to quit.");
+        System.out.println("\t 1 - to print the list contacts.");
+        System.out.println("\t 2 - to add an new contact.");
+        System.out.println("\t 3 - to modify an existing contact.");
+        System.out.println("\t 4 - to remove an cotnact.");
+        System.out.println("\t 5 - to search for a contact.");
+        System.out.println("\t 6 - to print the instructions.");
     }
 
 
