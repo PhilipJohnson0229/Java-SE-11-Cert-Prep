@@ -11,6 +11,14 @@ public class Contact
         this.number = number;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
     public String contactInfo()
     {
         return name + " : " + number;
@@ -20,5 +28,10 @@ public class Contact
     {
         this.name = newName;
         this.number = newNumber;
+    }
+
+    public static Contact createNewContact(String name, String number)
+    {
+        return new Contact(name, number);
     }
 }

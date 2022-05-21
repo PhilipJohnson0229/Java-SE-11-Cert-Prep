@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class SmartphoneCreator {
     private static Scanner scanner = new Scanner(System.in);
 
-    private static Smartphone smartphone = new Smartphone();
+    private static Smartphone smartphone = new Smartphone("");
 
     public static void main(String[] args)
     {
@@ -18,7 +18,7 @@ public class SmartphoneCreator {
 
         while(!quit)
         {
-            System.out.print("Enter your choice: ");
+           System.out.print("Enter your choice: ");
 
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -26,7 +26,8 @@ public class SmartphoneCreator {
             switch(choice)
             {
                 case 0:
-                    printInstructions();
+                    System.out.println("Shutting down...");
+                    quit = true;
                     break;
                 case 1:
                     smartphone.printContactList();
@@ -35,23 +36,24 @@ public class SmartphoneCreator {
                     addItem();
                     break;
                 case 3:
-                    modifyItem();
+                    updateContact();
                     break;
                 case 4:
-                    removeItem();
+                    removeContact();
                     break;
                 case 5:
-                    searchForItem();
+                    queryContact();
                     break;
                 case 6:
-                    processArrayList();
+                    printInstructions();
                     break;
-                case 7:
-                    quit = true;
-                    break;
-
             }
         }
+    }
+
+    public static  void startPhone()
+    {
+        System.out.println("Starting phone....");
     }
 
     public static void printInstructions()
@@ -66,6 +68,8 @@ public class SmartphoneCreator {
         System.out.println("\t 6 - to quit the application.");
     }
 
+
+
     public static void addItem()
     {
         System.out.println("Please enter a number: ");
@@ -74,56 +78,82 @@ public class SmartphoneCreator {
         System.out.println("Please enter a name: ");
         String name = scanner.nextLine();
 
-        smartphone.addContact(name, number);
-        scanner.nextLine();
-    }
-
-    public static void modifyItem()
-    {
-        System.out.println("Enter the phone number: ");
-        String itemNumber = scanner.nextLine();
-
-
-        System.out.println("Please enter the new name: ");
-        String newItem = scanner.nextLine();
-
-        smartphone.modifyContact(itemNumber, newItem);
-        scanner.nextLine();
-    }
-
-    public static void removeItem()
-    {
-        System.out.println("Enter the item name: ");
-        String itemNumber = scanner.nextLine();
-
-        smartphone.removeContact(itemNumber);
-        scanner.nextLine();
-    }
-
-    public static void searchForItem()
-    {
-
-        System.out.println("Please enter the search item: ");
-        String searchItem = scanner.nextLine();
-
-        if(smartphone.onFile(searchItem))
+        Contact newContact = new Contact(name, number);
+        if(smartphone.addContact(newContact))
         {
-            System.out.println("Found " + searchItem + " in the grocery list.");
+            System.out.println("New contact added: " + name + ", " + number);
         }
         else
         {
-            System.out.println(searchItem + " is not in the grocery list.0");
+            System.out.println("Cannot add. " + name + " already on file");
         }
     }
 
-    public static void processArrayList()
+    public static void updateContact()
     {
-        ArrayList<String> newArray = new ArrayList<String>();
-        newArray.addAll(smartphone.getContacts());
+        System.out.println("Enter the name of the contact you wish to change: ");
+        String name = scanner.nextLine();
 
-        ArrayList<String> nextArrayList = new ArrayList<String>(smartphone.getContacts());
+        Contact existingContactRecord = smartphone.queryContact(name);
 
-        String[] myArray = new String[smartphone.getContacts().size()];
-        myArray = smartphone.getContacts().toArray(myArray);
+        if(existingContactRecord == null)
+        {
+            System.out.println("Contact not found.");
+            return;
+        }
+
+        System.out.println("Enter the new contact name: ");
+        String newName = scanner.nextLine();
+        System.out.println("Enter the new contact number: ");
+        String newNumber = scanner.nextLine();
+
+        Contact newContact = Contact.createNewContact(newName, newNumber);
+        if(smartphone.modifyContact(existingContactRecord, newContact))
+        {
+            System.out.println("Contact has been modified.");
+        }
+        else
+        {
+            System.out.println("Unable to modify contact.");
+        }
+    }
+
+    public static void removeContact()
+    {
+        System.out.println("Enter the name of the contact you wish to change: ");
+        String name = scanner.nextLine();
+
+        Contact existingContactRecord = smartphone.queryContact(name);
+
+        if(existingContactRecord == null)
+        {
+            System.out.println("Contact not found.");
+            return;
+        }
+
+        if(smartphone.removeContact(existingContactRecord))
+        {
+            System.out.println("Contact successfully removed.");
+        }else
+        {
+            System.out.println("Unable to remove contact.");
+        }
+    }
+
+    public static void queryContact()
+    {
+        System.out.println("Enter the name of the contact you wish to change: ");
+        String name = scanner.nextLine();
+
+        Contact existingContactRecord = smartphone.queryContact(name);
+
+        if(existingContactRecord == null)
+        {
+            System.out.println("Contact not found.");
+            return;
+        }
+
+        System.out.println("Name: " + existingContactRecord.getName() +
+                ", Phone Number: " + existingContactRecord.getNumber());
     }
 }

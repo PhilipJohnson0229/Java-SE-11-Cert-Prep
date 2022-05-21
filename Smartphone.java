@@ -3,97 +3,106 @@ package com.philipJohnson;
 import java.util.ArrayList;
 
 public class Smartphone {
-    //create a mobile phone with the following capabilities
-    //able to store, modify, query, and remove contact names
-    //create a separate class for contacts
-    //create a master class that holds the array lists of contacts
-    //add an option menu
-    //quit, print list of contacts, add contacts, modify contacts, remove contacts
-    //when adding or updating be sure to check if the contact already exists
-    //be sure not to expose the inner workings of the array list
-    //mobile phone should do everything with contact objects only
-    private ArrayList<Contact> contacts = new ArrayList<Contact>();
+    private String myNumber;
+    private ArrayList<Contact> myContacts;
 
+    //gonna delete this
     private ArrayList<String> contactInfo = new ArrayList<String>();
 
-    public void addContact(String name, String number)
+    public Smartphone(String myNumber)
     {
-        Contact newContact  = new Contact(name, number);
-
-        contacts.add(newContact);
-
-        contactInfo.add(newContact.contactInfo());
+        this.myNumber = myNumber;
+        myContacts = new ArrayList<Contact>();
     }
 
-    private void verifyContact()
+    public boolean addContact(Contact contact)
     {
-
+        if(findContact(contact.getName()) >= 0)
+        {
+            System.out.println("Contact already exists.");
+            return false;
+        }
+        myContacts.add(contact);
+        return true;
     }
 
-    public ArrayList<String> getContacts() {
-        return contactInfo;
-    }
 
     public void printContactList()
     {
-        System.out.println("You have " + contacts.size() + " contacts in your address book.");
-        for(int i = 0; i < contacts.size(); i++)
+        System.out.println("You have " + myContacts.size() + " contacts in your address book.");
+        for(int i = 0; i < myContacts.size(); i++)
         {
-            System.out.println((i + 1) + ". " + contacts.get(i).contactInfo());
+            System.out.println((i + 1) + ". " + myContacts.get(i).getName()
+                    + " -> " + myContacts.get(i).getNumber());
         }
     }
 
-    public void modifyContact(String newName, String newNumber)
+    public boolean modifyContact(Contact oldContact, Contact newContact)
     {
-        int position = findItem(newName);
+        int foundPosition = findContact(oldContact);
+        if(foundPosition < 0)
+        {
+            System.out.println(oldContact.getName() + " was not found.");
+            return false;
+        }
+
+        this.myContacts.set(foundPosition, newContact);
+        System.out.println(oldContact.getName() + " was replaced with " + newContact.getName());
+        return true;
+    }
+
+    public boolean removeContact(Contact contact)
+    {
+        int foundPosition = findContact(contact);
+        if(foundPosition < 0)
+        {
+            System.out.println(contact.getName() + " was not found.");
+            return false;
+        }
+        this.myContacts.remove(foundPosition);
+        System.out.println(contact.getName() + " was deleted.");
+        return true;
+    }
+
+
+
+    private int findContact(Contact contact)
+    {
+        return myContacts.indexOf(contact);
+    }
+
+    private int findContact(String contactName)
+    {
+        for(int i = 0; i < myContacts.size(); i++)
+        {
+            Contact myContact = this.myContacts.get(i);
+            if(myContact.getName().equals(contactName))
+            {
+                return i;
+            }
+
+        }
+        return -1;
+    }
+
+    public String queryContact(Contact contact)
+    {
+        if(findContact(contact) >= 0)
+        {
+            return contact.getName();
+        }
+
+        return null;
+    }
+
+    public Contact queryContact(String name)
+    {
+        int position = findContact(name);
 
         if(position >= 0)
         {
-            modifyContact(position, newName, newNumber);
+            return this.myContacts.get(position);
         }
-    }
-
-    private void modifyContact(int position, String newContact, String newNumber)
-    {
-        contactInfo.set(position, newContact);
-
-        contacts.get(position).modifyInfo(newContact,newNumber);
-        System.out.println("contact at position " + (position + 1) + " has been modified");
-    }
-
-    public void removeContact(String number)
-    {
-        int position = findItem(number);
-
-        if(position >= 0)
-        {
-            removeContact(position);
-        }
-    }
-
-    public void removeContact(int position)
-    {
-        //Contact theItem = contacts.get(position);
-        //if we remove an item from the list then the ascending item will descend into the vacant spot
-        //i.e. the item at position 2 will now be at position 1 which is the second index
-        contacts.remove(position);
-        contactInfo.remove(position);
-        System.out.println("The contact at position " + (position + 1) + " has been removed");
-    }
-
-    private int findItem(String searchItem)
-    {
-        return contactInfo.indexOf(contacts.indexOf(searchItem));
-    }
-
-    public boolean onFile(String searchItem)
-    {
-        int position = findItem(searchItem);
-        if(position >= 0)
-        {
-            return true;
-        }
-
-        return false;
+        return null;
     }
 }
