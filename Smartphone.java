@@ -6,9 +6,6 @@ public class Smartphone {
     private String myNumber;
     private ArrayList<Contact> myContacts;
 
-    //gonna delete this
-    private ArrayList<String> contactInfo = new ArrayList<String>();
-
     public Smartphone(String myNumber)
     {
         this.myNumber = myNumber;
