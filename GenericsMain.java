@@ -31,7 +31,13 @@ public class GenericsMain {
         hawthorn.matchScore(jaxWacksons, 3, 8);
 
         jaxWacksons.matchScore(fremantle, 2, 1);
-        jaxWacksons.matchScore(baseballTeam, 1, 1);
-
+        //jaxWacksons.matchScore(baseballTeam, 1, 1);
+        System.out.println("Rankings:");
+        System.out.println(baseballTeam.getName() + ": " + baseballTeam.ranking());
+        System.out.println(jaxWacksons.getName() + ": " + jaxWacksons.ranking());
+        System.out.println(soccerPlayerTeam.getName() + ": " + soccerPlayerTeam.ranking());
+        System.out.println(melbourne.getName() + ": " + melbourne.ranking());
+        System.out.println(hawthorn.getName() + ": " + hawthorn.ranking());
+        System.out.println(fremantle.getName() + ": " + fremantle.ranking());
     }
 }

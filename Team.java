@@ -42,7 +42,7 @@ public class Team<T extends Player> {
         return this.members.size();
     }
 
-    public void matchScore(Team opponent, int ourScore, int theirScore)
+    public void matchScore(Team<T> opponent, int ourScore, int theirScore)
     {
         String message;
 
