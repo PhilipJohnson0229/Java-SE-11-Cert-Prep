@@ -1,8 +1,9 @@
 package com.philipJohnson;
 
 import java.util.ArrayList;
+
 //the diamond with the T in the middle helps us declare generic types
-public class Team<T extends Player> {
+public class Team<T extends Player> implements Comparable<Team<T>>{
     private String name;
 
     int played = 0;
@@ -74,5 +75,19 @@ public class Team<T extends Player> {
     public int ranking()
     {
         return (won * 2) + tied;
+    }
+
+    @Override
+    public int compareTo(Team<T> team) {
+        if(this.ranking() > team.ranking())
+        {
+            return -1;
+        }else if(this.ranking() < team.ranking())
+        {
+            return 1;
+        }else
+        {
+        return 0;
+        }
     }
 }
